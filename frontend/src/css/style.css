@@ -1,0 +1,274 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic);
+
+
+/* Basic resest */
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    font-family: Roboto, sans-serif;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* main {
+    height: 100%;
+} */
+
+.limiting-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    position: relative;
+    height: 100vh;
+    background-color: beige;
+}
+
+.main-section {
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.main-section__button {
+    margin-left: 75%;
+    font-size: 2rem;
+    margin-top: 1.5rem;
+    width: 15vw;
+    height: 10vh;
+    /* padding: 1rem; */
+    -webkit-box-shadow: 12px 11px 16px 0px rgba(34, 60, 80, 0.46);
+    -moz-box-shadow: 12px 11px 16px 0px rgba(34, 60, 80, 0.46);
+    box-shadow: 12px 11px 16px 0px rgba(34, 60, 80, 0.46);
+}
+
+/* .main-section__button:hover {
+    transform: translateY(-0.2rem);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
+} */
+
+.main-section__button:hover:active {
+    transform: translateY(0.2rem);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
+    background-color:lightseagreen
+}
+
+.tasks {
+    display: flex;
+    flex-direction: column;
+    /* border: 2px solid black; */
+    width: 100%;
+    height: 100%;
+    margin-top: 4rem;
+    /* box-sizing: border-box; */
+    background-color: beige;
+    position: relative;
+    z-index: 1;
+
+}
+
+.tasks__item {
+    height: 6rem;
+    width: 80%;
+    box-sizing: border-box;
+    padding: 1rem 2rem;
+    margin: 1rem auto;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    background-color: white;
+    -webkit-box-shadow: 12px 11px 16px 0px rgba(34, 60, 80, 0.46);
+    -moz-box-shadow: 12px 11px 16px 0px rgba(34, 60, 80, 0.46);
+    box-shadow: 12px 11px 16px 0px rgba(34, 60, 80, 0.46);
+    border-radius: 1rem;
+}
+
+.container {
+    display: block;
+    /* position: relative; */
+    padding-left: 35px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 1.75rem;
+    left: 2rem;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 2.5rem;
+    border: 1px solid black;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container input:checked~.checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.task__item-message {
+    font-size: 2rem;
+    margin-left: 3rem;
+}
+
+.date-time {
+    margin-left: 10rem;
+    font-size: 2rem;
+}
+
+.task__item-edit {
+    padding-left: 2rem;
+}
+
+.material-symbols-outlined {
+    font-size: 4rem;
+    margin-left: 2rem;
+}
+
+#modal {
+    position: absolute;
+    top: 30rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    width: 50rem;
+    height: 30rem;
+    text-align: center;
+}
+
+#modal>h2 {
+    font-size: 3rem;
+}
+
+#ticketForm {
+    margin-top: 3rem;
+}
+
+#ticketForm>label {
+    font-size: 2rem;
+
+}
+#shortDescription {
+    margin-left: 2rem;
+    font-size: 1.6rem;
+}
+
+#fullDescription {
+    margin-left: 2rem;
+    font-size: 1.6rem;
+}
+
+textarea {
+    resize: none;
+}
+
+#cancelButton, #okButton {
+    margin-top: 6rem;
+    font-size: 1.6rem;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+#cancelButton {
+    width: 12rem;
+    height: 4rem;
+    background-color: rgb(243, 138, 138);
+}
+
+#okButton {
+    width: 10rem;
+    height: 4rem;
+    margin-left: 3rem;
+}
+
+#okButton:hover {
+    background-color: rgb(5, 76, 17);
+    color: white;
+}
+
+#cancelButton:hover {
+    background-color: rgb(243, 82, 82);
+    color: white;
+}
+
+#okButton:hover:active, #cancelButton:hover:active {
+    transform: translateY(+0.2rem);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
+}

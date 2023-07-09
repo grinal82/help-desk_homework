@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="./src/css/style.css">
+    <script src="./src/js/main.js" defer></script>
+    <title>Task Manager</title>
+</head>
+
+<body>
+    <main>
+        <div class="limiting-container">
+            <div class="main-section">
+                <button class="main-section__button" id="addTicketButton"><span>Добавить тикет</span></button>
+            </div>
+            <!-- wrapper for tasks tickets -->
+            <div class="tasks" id="taskList">
+                <!-- individual task ticket starts -->
+                <div class="tasks__item">
+                    <label class="container">
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <div class="task__item-message">
+                        <p>Поменрять краску в принтере комнатм 405</p>
+                    </div>
+                    <div class="date-time">10.03.19 08:40</div>
+                    <div class="task__item-edit"><a href=""><span class="material-symbols-outlined">
+                                draft_orders
+                            </span></a></div>
+                    <div class="task__item-cancel"><a href="#"><span class="material-symbols-outlined">
+                                cancel
+                            </span></a></div>
+                </div>
+                <!-- individual task ticket ends here -->
+
+                <!-- individual task ticket starts -->
+                <div class="tasks__item">
+                    <label class="container">
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                    <div class="task__item-message">
+                        <p>Поменрять краску в принтере комнатм 405</p>
+                    </div>
+                    <div class="date-time">10.03.19 08:40</div>
+                    <div class="task__item-edit"><a href=""><span class="material-symbols-outlined">
+                                draft_orders
+                            </span></a></div>
+                    <div class="task__item-cancel">
+                        <a href="#"><span class="material-symbols-outlined">
+                                cancel
+                            </span></a>
+                    </div>
+                </div>
+                <!-- individual task ticket ends here -->
+            </div>
+
+            <!-- Modal Window for ADDING NEW TICKET starts here -->
+            <div id="modal" style="display: none;">
+                <h2>Добавить тикет</h2>
+                <form id="ticketForm">
+                    <label for="shortDescription">Краткое описание:</label>
+                    <input type="text" id="shortDescription" required><br><br>
+
+                    <label for="fullDescription">Подробное описание:</label>
+                    <textarea id="fullDescription" required></textarea><br><br>
+
+                    <button type="button" id="cancelButton">Отмена</button>
+                    <button type="submit" id="okButton">ОК</button>
+                </form>
+            </div>
+            <!-- Modal Window for ADDING NEW TICKET ENDS here -->
+
+        </div>
+    </main>
+
+</body>
+
+</html>
