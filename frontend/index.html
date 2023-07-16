@@ -29,12 +29,16 @@
                         <p>Поменрять краску в принтере комнатм 405</p>
                     </div>
                     <div class="date-time">10.03.19 08:40</div>
-                    <div class="task__item-edit"><a href=""><span class="material-symbols-outlined">
+                    <a href="">
+                        <div class="task__item-edit"><span class="material-symbols-outlined">
                                 draft_orders
-                            </span></a></div>
-                    <div class="task__item-cancel"><a href="#"><span class="material-symbols-outlined">
+                            </span></div>
+                    </a>
+                    <a href="#">
+                        <div class="task__item-cancel"><span class="material-symbols-outlined">
                                 cancel
-                            </span></a></div>
+                            </span></div>
+                    </a>
                 </div>
                 <!-- individual task ticket ends here -->
 
@@ -62,7 +66,7 @@
 
             <!-- Modal Window for ADDING NEW TICKET starts here -->
             <div id="modal" style="display: none;">
-                <h2>Добавить тикет</h2>
+                <h2>Добавить/Изменить тикет</h2>
                 <form id="ticketForm">
                     <label for="shortDescription">Краткое описание:</label>
                     <input type="text" id="shortDescription" required><br><br>
@@ -70,10 +74,13 @@
                     <label for="fullDescription">Подробное описание:</label>
                     <textarea id="fullDescription" required></textarea><br><br>
 
+                    <input type="hidden" id="editTicketId">
                     <button type="button" id="cancelButton">Отмена</button>
                     <button type="submit" id="okButton">ОК</button>
                 </form>
             </div>
+
+
             <!-- Modal Window for ADDING NEW TICKET ENDS here -->
 
         </div>

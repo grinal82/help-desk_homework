@@ -1,6 +1,6 @@
 function loadTickets() {
     const xhr = new XMLHttpRequest();
-    xhr.open("GET", "localhost:7070/?method=allTickets");
+    xhr.open("GET", "http://localhost:7070/?method=allTickets");
     xhr.addEventListener("load", () => {
         if (xhr.status >= 200 && xhr.status < 300) {
             try {
@@ -12,6 +12,57 @@ function loadTickets() {
         }
     });
     xhr.send();
+}
+
+function addTicket(shortDescription, fullDescription) {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:7070/?method=createTicket");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.addEventListener("load", () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            try {
+                const ticket = JSON.parse(xhr.responseText);
+                loadTickets();
+                closeModal();
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    });
+
+    const newTicket = {
+        name: shortDescription,
+        description: fullDescription,
+        status: false,
+    };
+
+    xhr.send(JSON.stringify(newTicket));
+}
+
+function updateTicketStatus(ticketId, isChecked) {
+    const xhr = new XMLHttpRequest();
+    xhr.open(
+        "PUT",
+        `http://localhost:7070/?method=checkTicket&ticketId=${ticketId}`
+    );
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.addEventListener("load", () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            try {
+                const updatedTicket = JSON.parse(xhr.responseText);
+                console.log("Ticket status updated:", updatedTicket);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    });
+
+    const updatedTicket = {
+        id: ticketId,
+        status: isChecked, // Use the updated checkbox state as a boolean
+    };
+
+    xhr.send(JSON.stringify(updatedTicket));
 }
 
 function displayTickets(tickets) {
@@ -26,6 +77,14 @@ function displayTickets(tickets) {
         checkboxLabel.classList.add("container");
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
+        checkbox.checked = ticket.status; // Set the checkbox status
+        checkbox.dataset.ticketId = ticket.id;
+        checkbox.addEventListener("change", () => {
+            const ticketId = checkbox.dataset.ticketId;
+            const isChecked = checkbox.checked; // Retrieve the updated checkbox state
+            console.log(isChecked);
+            updateTicketStatus(ticketId, isChecked);
+        });
         const checkmark = document.createElement("span");
         checkmark.classList.add("checkmark");
         checkboxLabel.appendChild(checkbox);
@@ -50,6 +109,9 @@ function displayTickets(tickets) {
         editIcon.textContent = "draft_orders";
         editLink.appendChild(editIcon);
         taskItemEdit.appendChild(editLink);
+        editLink.addEventListener("click", () => {
+            openEditModal(ticket);
+        });
 
         const taskItemCancel = document.createElement("div");
         taskItemCancel.classList.add("task__item-cancel");
@@ -59,6 +121,9 @@ function displayTickets(tickets) {
         cancelIcon.textContent = "cancel";
         cancelLink.appendChild(cancelIcon);
         taskItemCancel.appendChild(cancelLink);
+        cancelLink.addEventListener("click", () => {
+            deleteTicket(ticket.id);
+        });
 
         taskItem.appendChild(checkboxLabel);
         taskItem.appendChild(taskItemMessage);
@@ -72,7 +137,16 @@ function displayTickets(tickets) {
 
 function openModal() {
     const modal = document.getElementById("modal");
+    const shortDescriptionInput = document.getElementById("shortDescription");
+    const fullDescriptionInput = document.getElementById("fullDescription");
+    const editTicketIdInput = document.getElementById("editTicketId");
+
     modal.style.display = "block";
+
+    // Reset form fields
+    shortDescriptionInput.value = "";
+    fullDescriptionInput.value = "";
+    editTicketIdInput.value = "";
 }
 
 function closeModal() {
@@ -80,21 +154,32 @@ function closeModal() {
     modal.style.display = "none";
 }
 
-function addTicket(event) {
-    event.preventDefault();
+function openEditModal(ticket) {
+    const modal = document.getElementById("modal");
+    modal.style.display = "block";
 
     const shortDescriptionInput = document.getElementById("shortDescription");
     const fullDescriptionInput = document.getElementById("fullDescription");
+    const editTicketIdInput = document.getElementById("editTicketId");
 
+    shortDescriptionInput.value = ticket.name;
+    fullDescriptionInput.textContent = ticket.description; 
+    editTicketIdInput.value = ticket.id;
+}
+
+function editTicket(ticketId, shortDescription, fullDescription) {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "localhost:7070/?method=createTicket");
+    xhr.open(
+        "PUT",
+        `http://localhost:7070/?method=updateTicket&editTicketId=${ticketId}`
+    );
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.withCredentials = true;
     xhr.addEventListener("load", () => {
         if (xhr.status >= 200 && xhr.status < 300) {
             try {
-                const ticket = JSON.parse(xhr.responseText);
-                loadTickets();
+                const editedTicket = JSON.parse(xhr.responseText);
+                console.log("Ticket edited:", editedTicket);
+                loadTickets(); // Refresh the ticket list after editing
                 closeModal();
             } catch (e) {
                 console.error(e);
@@ -102,13 +187,35 @@ function addTicket(event) {
         }
     });
 
-    const newTicket = {
-        name: shortDescriptionInput.value,
-        description: fullDescriptionInput.value,
+    const editedTicket = {
+        id: ticketId,
+        name: shortDescription,
+        description: fullDescription,
         status: false,
     };
 
-    xhr.send(JSON.stringify(newTicket));
+    xhr.send(JSON.stringify(editedTicket));
+}
+
+function deleteTicket(ticketId) {
+    const xhr = new XMLHttpRequest();
+    xhr.open(
+        "DELETE",
+        `http://localhost:7070/?method=deleteTicket&deleteId=${ticketId}`
+    );
+
+    xhr.addEventListener("load", () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            try {
+                const deletedTicket = JSON.parse(xhr.responseText);
+                console.log("Ticket deleted:", deletedTicket);
+                loadTickets(); // Refresh the ticket list after deletion
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    });
+    xhr.send();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -118,7 +225,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     addTicketButton.addEventListener("click", openModal);
     cancelButton.addEventListener("click", closeModal);
-    ticketForm.addEventListener("submit", addTicket);
+    ticketForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const shortDescriptionInput =
+            document.getElementById("shortDescription");
+        const fullDescriptionInput = document.getElementById("fullDescription");
+        const editTicketIdInput = document.getElementById("editTicketId");
+
+        if (editTicketIdInput.value) {
+            // If editTicketIdInput has a value, call editTicket
+            const editedTicketId = editTicketIdInput.value;
+            editTicket(
+                editedTicketId,
+                shortDescriptionInput.value,
+                fullDescriptionInput.value
+            );
+        } else {
+            // If editTicketIdInput is empty, call addTicket
+            addTicket(shortDescriptionInput.value, fullDescriptionInput.value);
+        }
+
+        closeModal();
+    });
 
     loadTickets();
 });

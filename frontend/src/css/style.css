@@ -183,6 +183,7 @@ img {
 .task__item-message {
     font-size: 2rem;
     margin-left: 3rem;
+    min-width: 25rem;
 }
 
 .date-time {
@@ -192,6 +193,7 @@ img {
 
 .task__item-edit {
     padding-left: 2rem;
+    margin-left: 7rem;
 }
 
 .material-symbols-outlined {
