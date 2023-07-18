@@ -27,6 +27,7 @@
                     </label>
                     <div class="task__item-message">
                         <p>Поменрять краску в принтере комнатм 405</p>
+                        <div id="modalFullDescription"></div>
                     </div>
                     <div class="date-time">10.03.19 08:40</div>
                     <a href="">
@@ -79,10 +80,16 @@
                     <button type="submit" id="okButton">ОК</button>
                 </form>
             </div>
-
-
             <!-- Modal Window for ADDING NEW TICKET ENDS here -->
-
+            
+            <!-- Modal Widow for deleteing the ticket -->
+            <div class="delete-modal" style="display: none;" id="deleteModal">
+                <h2>Вы действительно хотите удалить данный тикет???</h2>
+                <br>
+                <h2>ЭТА ОПРЕАЦИЯ НЕОБРАТИМА</h2>
+                <button type="button" id="delete_cancelButton">Отмена</button>
+                <button type="submit" id="delete_okButton">ОК</button>
+            </div>
         </div>
     </main>
 

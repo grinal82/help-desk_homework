@@ -77,7 +77,7 @@ img {
 .main-section__button:hover:active {
     transform: translateY(0.2rem);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.2);
-    background-color:lightseagreen
+    background-color: lightseagreen
 }
 
 .tasks {
@@ -95,7 +95,7 @@ img {
 }
 
 .tasks__item {
-    height: 6rem;
+    height: fit-content;
     width: 80%;
     box-sizing: border-box;
     padding: 1rem 2rem;
@@ -184,6 +184,7 @@ img {
     font-size: 2rem;
     margin-left: 3rem;
     min-width: 25rem;
+    cursor: pointer;
 }
 
 .date-time {
@@ -194,11 +195,25 @@ img {
 .task__item-edit {
     padding-left: 2rem;
     margin-left: 7rem;
+    cursor: pointer;
+    transition: all .3;
+}
+
+.task__item-edit:hover {
+    color:rgb(103, 224, 123);
+}
+
+.task__item-cancel:hover {
+    color: red;
 }
 
 .material-symbols-outlined {
     font-size: 4rem;
     margin-left: 2rem;
+}
+
+.material-symbols-outlined:hover {
+    font-size: 5rem;
 }
 
 #modal {
@@ -228,6 +243,7 @@ img {
     font-size: 2rem;
 
 }
+
 #shortDescription {
     margin-left: 2rem;
     font-size: 1.6rem;
@@ -242,7 +258,8 @@ textarea {
     resize: none;
 }
 
-#cancelButton, #okButton {
+#cancelButton,
+#okButton {
     margin-top: 6rem;
     font-size: 1.6rem;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
@@ -270,7 +287,65 @@ textarea {
     color: white;
 }
 
-#okButton:hover:active, #cancelButton:hover:active {
+#okButton:hover:active,
+#cancelButton:hover:active {
+    transform: translateY(+0.2rem);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
+}
+
+#modalFullDescription {
+    display: block;
+    font-size: 2rem;
+    width: 100%;
+    margin-top: 2.5rem;
+}
+
+#deleteModal {
+    position: absolute;
+    top: 30rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+    width: 50rem;
+    height: 30rem;
+    text-align: center;
+}
+
+#delete_cancelButton,
+#delete_okButton {
+    margin-top: 6rem;
+    font-size: 1.6rem;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+#delete_cancelButton {
+    width: 12rem;
+    height: 4rem;
+    background-color: rgb(243, 138, 138);
+}
+
+#delete_okButton {
+    width: 10rem;
+    height: 4rem;
+    margin-left: 3rem;
+}
+
+#delete_okButton:hover {
+    background-color: rgb(5, 76, 17);
+    color: white;
+}
+
+#delete_cancelButton:hover {
+    background-color: rgb(243, 82, 82);
+    color: white;
+}
+
+#delete_okButton:hover:active,
+#delete_cancelButton:hover:active {
     transform: translateY(+0.2rem);
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
 }

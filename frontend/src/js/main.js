@@ -96,6 +96,11 @@ function displayTickets(tickets) {
         shortDescription.textContent = ticket.name;
         taskItemMessage.appendChild(shortDescription);
 
+        // Add click event listener to show full description
+        taskItemMessage.addEventListener("click", (event) => {
+            showFullDescription(event, ticket);
+        });
+
         const dateTime = document.createElement("div");
         dateTime.classList.add("date-time");
         const date = new Date(ticket.created);
@@ -122,7 +127,8 @@ function displayTickets(tickets) {
         cancelLink.appendChild(cancelIcon);
         taskItemCancel.appendChild(cancelLink);
         cancelLink.addEventListener("click", () => {
-            deleteTicket(ticket.id);
+            openDeleteModal(ticket.id);
+            console.log(ticket.id);
         });
 
         taskItem.appendChild(checkboxLabel);
@@ -133,6 +139,43 @@ function displayTickets(tickets) {
 
         taskList.appendChild(taskItem);
     });
+}
+
+function showFullDescription(event, ticket) {
+    console.log(ticket);
+    const taskItemMessage = event.currentTarget;
+
+    // Check if the modalFullDescription already exists
+    let modalFullDescription = taskItemMessage.querySelector(
+        "#modalFullDescription"
+    );
+    if (modalFullDescription) {
+        // Remove the modalFullDescription if it exists
+        modalFullDescription.remove();
+        return;
+    }
+
+    // Create the modalFullDescription element
+    modalFullDescription = document.createElement("div");
+    modalFullDescription.id = "modalFullDescription";
+    modalFullDescription.textContent = ticket.description;
+    console.log(
+        "modalFullDescription content is",
+        modalFullDescription.textContent
+    );
+
+    // Insert the modalFullDescription as a child of the taskItemMessage
+    const shortDescription = taskItemMessage.querySelector("p");
+    if (shortDescription) {
+        shortDescription.insertAdjacentElement(
+            "afterend",
+            modalFullDescription
+        );
+    } else {
+        taskItemMessage.appendChild(modalFullDescription);
+    }
+
+    console.log(modalFullDescription);
 }
 
 function openModal() {
@@ -163,8 +206,26 @@ function openEditModal(ticket) {
     const editTicketIdInput = document.getElementById("editTicketId");
 
     shortDescriptionInput.value = ticket.name;
-    fullDescriptionInput.textContent = ticket.description; 
+    fullDescriptionInput.textContent = ticket.description;
     editTicketIdInput.value = ticket.id;
+}
+
+function openDeleteModal(ticketId) {
+    const deleteModal = document.getElementById("deleteModal");
+    console.log(deleteModal);
+    deleteModal.style.display = "block";
+    const deleteCancelButton = document.getElementById("delete_cancelButton");
+    const deleteOkButton = document.getElementById("delete_okButton");
+    deleteCancelButton.addEventListener("click", closeDeleteModal);
+    deleteOkButton.addEventListener("click", function () {
+        deleteTicket(ticketId);
+        closeDeleteModal();
+    });
+}
+
+function closeDeleteModal() {
+    const deleteModal = document.getElementById("deleteModal");
+    deleteModal.style.display = "none";
 }
 
 function editTicket(ticketId, shortDescription, fullDescription) {
